@@ -4,13 +4,12 @@ OpenBaseball is a spiritual successor to the baseball video games of the mid-199
 # Status of Builds
 *IMPORTANT - OPENBASEBALL DOES NOT CURRENTLY COMPILE*
 
-+---------------------+-----------------+
-| Windows (10+)       |  does not build |
-+---------------------+-----------------+
-| MacOS               |  does not build |
-+---------------------+-----------------+
-| Linux               |  does not build |
-+---------------------+-----------------+
+| HOST OS         |  STATUS         |
+| --------------- | --------------- |
+| Windows (10+)   |  does not build |
+| MacOS           |  does not build |
+| Linux           |  does not build |
+
 
 # Maintainers
 OpenBaseball is currently a private educational project but I welcome collaboration.  If you are interested in helping out, please email me at svet[dot]am [at] gmail[dot]com
