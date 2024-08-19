@@ -26,20 +26,20 @@ Presentation & User Interface
 ******************************
 The User Experience (UX) and User Interface (UI) of Front Page Sports: Baseball is a key influence - particularly the multi-window based experience.
 
-.. image:: ../img/fps_baseball.jpg
+.. image:: ./img/fps_baseball.jpg
 
 ******************************
 Art Style
 ******************************
 The overarching art style of OpenBaseball will be respectful of the sport (eg, avoid cartoon style graphics) without being hyper-realistic.  A good example of the general aesthetic is Microsoft Baseball 2000:
 
-.. image:: ../img/ms_baseball_2k.jpg
+.. image:: ./img/ms_baseball_2k.jpg
 
 That is, player models should have realistic proportions and movements.
 
 The game should **explicitly** *avoid* cartoon style art with exagerated features or movements.  As noted, an example of the art style to avoid is Ken Griffey Jr MVP Baseball:
 
-.. image:: ../img/ken_griffey_jr_mlb.jpg
+.. image:: ./img/ken_griffey_jr_mlb.jpg
 
 ******************************
 Graphics Rendering
