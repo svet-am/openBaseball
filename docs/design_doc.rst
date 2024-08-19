@@ -17,6 +17,19 @@ PROJECT GOALS
 ===============================
 The primary goal of OpenBaseball is to produce a game that recreates the general look and feel of the baseball games common during the mid-1990s to early 2000s but updated where appropriate for use on modern hardware and suitable for modern sensibilities.  OpenBaseball will use Front Page Sports: Baseball '98 and Microsoft Baseball 200 as a core inspiration and then expand on it (to varying degrees) into adjacent gameplay mechanisms or depth of technical detail.
 
+******************************
+Design Pillars
+******************************
+
+1. Simulation Accuracy
+  At it's heart, openBaseball has a deep and accurate simulation engine.  The simulation engine extends to all aspects of the game of baseball - stadium environment (weather, altitude, etc), player health, team health, and finances.
+
+2. PC Desktop Focus
+  openBaseball is a desktop application.  It should make extensive use (and focus upon) the interfaces native to desktop PCs - multi-window interfaces, toolbars, etc.  It is *NOT* intended to be mobile friendly.
+
+3. Scalable Immersion
+  The player should be able to determine (on the fly) the level of immersion that they wish to have.  For example, those that want to focus on _running_ a baseball team can stay at the level of "owner simulation" but should they decided that they would like to go down a level and manage the team starting lineup for a given game or even interactively play out a given game they should have the option.  The player should have total freedom to move up and down this "stack" of detail at their own discretion.  
+
 ===============================
 STYLE & AESTHETICS
 ===============================
