@@ -4,6 +4,9 @@
 cmake_minimum_required(VERSION 3.15)
 
 project(open_baseball C CXX)
+set(CMAKE_C_COMPILER "$ENV{CROSS_COMPILE}gcc")
+set(CMAKE_CXX_COMPILER "$ENV{CROSS_COMPILE}g++")
+
 # setup version numbers
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 0)
