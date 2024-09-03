@@ -14,7 +14,7 @@ set(CMAKE_CXX_COMPILER "$ENV{CROSS_COMPILE}g++")
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
-# write the verion header
+# write the version header for the primary application
 file(WRITE ${CMAKE_BINARY_DIR}/../include/obb_version.hpp
 "#define OBB_VERSION_MAJOR \"${VERSION_MAJOR}\"\n"
 "#define OBB_VERSION_MINOR \"${VERSION_MINOR}\"\n"
