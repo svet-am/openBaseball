@@ -6,7 +6,7 @@
 #include "../include/obb_version.hpp"
 
 int main() {
-    std::cout << "Hello World!";
-	std::cout << "Test for " << OBB_NAME << " " << OBB_VERSION_MAJOR << "." << OBB_VERSION_MINOR << "." << OBB_VERSION_PATCH;
+    std::cout << "Hello World!" << std::endl;
+	std::cout << "Test for " << OBB_NAME << " " << OBB_VERSION_MAJOR << "." << OBB_VERSION_MINOR << "." << OBB_VERSION_PATCH << std::endl;
     return 0;
 }
