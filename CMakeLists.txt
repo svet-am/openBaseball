@@ -13,7 +13,7 @@ project(open_baseball C CXX)
 set(APP_NAME "OpenBaseball")
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 0)
-set(VERSION_PATCH 0)
+set(VERSION_PATCH 1)
 
 message(STATUS "Detected Build OS: ${CMAKE_HOST_SYSTEM_NAME}")
 
