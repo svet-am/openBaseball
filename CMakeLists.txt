@@ -27,6 +27,7 @@ file(WRITE ${CMAKE_BINARY_DIR}/../src/obb_version.hpp
 "#define OBB_VERSION_MAJOR \"${VERSION_MAJOR}\"\n"
 "#define OBB_VERSION_MINOR \"${VERSION_MINOR}\"\n"
 "#define OBB_VERSION_PATCH \"${VERSION_PATCH}\"\n"
+"const char* OBB_NAME_VER = OBB_NAME \" \" OBB_VERSION_MAJOR \".\" OBB_VERSION_MINOR \".\" OBB_VERSION_PATCH ;\n"
 )
 
 # add the external dependency for SFML
