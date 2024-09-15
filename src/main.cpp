@@ -1,10 +1,11 @@
 #include "SFML/Window.hpp"
 #include "SFML/OpenGL.hpp"
+#include "obb_version.hpp"
 
 int main()
 {
     // create the window
-    sf::Window window(sf::VideoMode(800, 600), "OpenGL", sf::Style::Default, sf::ContextSettings(32));
+    sf::Window window(sf::VideoMode(640, 480), OBB_NAME_VER, sf::Style::Default, sf::ContextSettings(24));
     window.setVerticalSyncEnabled(true);
 
     // activate the window
