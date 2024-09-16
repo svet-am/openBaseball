@@ -1,15 +1,34 @@
+#include <time.h>
+#include <iostream>
 #include "SFML/Window.hpp"
 #include "SFML/OpenGL.hpp"
+#include "SFML/Graphics.hpp"
 #include "obb_version.hpp"
+using namespace std;
 
-int main()
+int main(int argc, char *argv[])
 {
+	cout << "The location of the binary is " << argv[0] << endl;
+	//create the splash screen window
+	sf::RenderWindow splashWindow(sf::VideoMode(512, 512), "Splash Screen", sf::Style::None);
+	sf::Texture splashScreenLogoTexture;
+	
+	if (!splashScreenLogoTexture.loadFromFile("img/obb_logo.png", sf::IntRect(0, 0, 512, 512)))
+		return -1;
+
+	sf::Sprite splashScreenLogoSprite(splashScreenLogoTexture);	
+	splashWindow.draw(splashScreenLogoSprite);
+    splashWindow.display();		
+	Sleep(5000);	
+	splashWindow.close();
+	
+	
     // create the window
-    sf::Window window(sf::VideoMode(640, 480), OBB_NAME_VER, sf::Style::Default, sf::ContextSettings(24));
-    window.setVerticalSyncEnabled(true);
+    sf::Window glWindow(sf::VideoMode(640, 480), OBB_NAME_VER, sf::Style::Default, sf::ContextSettings(24));
+    glWindow.setVerticalSyncEnabled(true);
 
     // activate the window
-    window.setActive(true);
+    glWindow.setActive(true);
 
     // load resources, initialize the OpenGL states, ...
 
@@ -19,7 +38,7 @@ int main()
     {
         // handle events
         sf::Event event;
-        while (window.pollEvent(event))
+        while (glWindow.pollEvent(event))
         {
             if (event.type == sf::Event::Closed)
             {
@@ -39,7 +58,7 @@ int main()
         // draw...
 
         // end the current frame (internally swaps the front and back buffers)
-        window.display();
+        glWindow.display();
     }
 
     // release resources...
