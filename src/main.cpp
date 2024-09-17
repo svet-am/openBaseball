@@ -1,19 +1,32 @@
 #include <time.h>
+#include <stdlib.h> 
 #include <iostream>
 #include "SFML/Window.hpp"
 #include "SFML/OpenGL.hpp"
 #include "SFML/Graphics.hpp"
 #include "obb_version.hpp"
-using namespace std;
+#include "obb_utils.hpp"
+#if defined(_WIN32) || defined(_WIN64)
 
+#elif defined(__linux__)
+	#include <limits.h>
+	#include <unistd.h>	
+#else
+#endif
+
+using namespace std;
+ 
 int main(int argc, char *argv[])
 {
-	cout << "The location of the binary is " << argv[0] << endl;
+	//get current path of the executable
+	string obbPathString = getexepath();
+	cout << "The location of the binary is " << obbPathString << endl;
+	cout << "The argv is " 					<< getenv("_") 		  << endl;
 	//create the splash screen window
 	sf::RenderWindow splashWindow(sf::VideoMode(512, 512), "Splash Screen", sf::Style::None);
 	sf::Texture splashScreenLogoTexture;
 	
-	if (!splashScreenLogoTexture.loadFromFile("img/obb_logo.png", sf::IntRect(0, 0, 512, 512)))
+	if (!splashScreenLogoTexture.loadFromFile(obbPathString.append("/img/obb_logo.png"), sf::IntRect(0, 0, 512, 512)))
 		return -1;
 
 	sf::Sprite splashScreenLogoSprite(splashScreenLogoTexture);	

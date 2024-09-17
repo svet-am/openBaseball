@@ -44,7 +44,16 @@ FetchContent_Declare(SFML
 	SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
- 
+# add the obb_utils library
+# obb_utils is special housekeeping functions for obb_utils
+add_library(obb-utils SHARED)
+target_sources(obb-utils PRIVATE
+				${CMAKE_BINARY_DIR}/../src/obb_utils.cpp
+)
+target_sources(obb-utils PUBLIC
+				${CMAKE_BINARY_DIR}/../src/obb_utils.hpp
+)
+
 # set up the main application build
 add_executable(${APP_NAME} ${CMAKE_BINARY_DIR}/../src/main.cpp)
 target_compile_features(${APP_NAME} PRIVATE cxx_std_17)
@@ -52,6 +61,7 @@ target_include_directories(${APP_NAME} PRIVATE  ${CMAKE_BINARY_DIR}/_deps/sfml-s
 target_link_libraries(${APP_NAME} PRIVATE sfml-system)
 target_link_libraries(${APP_NAME} PRIVATE sfml-window)
 target_link_libraries(${APP_NAME} PRIVATE sfml-graphics)
+target_link_libraries(${APP_NAME} PRIVATE obb-utils)
 
 # set OS-specific dependencies
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Linux")
