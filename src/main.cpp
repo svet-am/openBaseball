@@ -1,3 +1,6 @@
+//main.cpp for OpenBaseball
+//https://github.com/svet-am/openBaseball
+//written by Tony McDowell (svet.am@gmail.com)
 #include <time.h>
 #include <stdlib.h> 
 #include <iostream>

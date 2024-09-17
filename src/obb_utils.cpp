@@ -1,3 +1,6 @@
+//obb_utils.h for OpenBaseball
+//https://github.com/svet-am/openBaseball
+//written by Tony McDowell (svet.am@gmail.com)
 /**
  * Determination a platform of an operation system
  * Fully supported supported only GNU GCC/G++, partially on Clang/LLVM
@@ -31,6 +34,7 @@ std::string getexepath()
   #elif defined(__linux__)
   ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
   return std::string( result, (count > 0) ? count : 0 );
+  #elif defined(__APPLE__) && defined(__MACH__)
   #endif
   
 }

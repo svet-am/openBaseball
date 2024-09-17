@@ -44,8 +44,8 @@ FetchContent_Declare(SFML
 	SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-# add the obb_utils library
-# obb_utils is special housekeeping functions for obb_utils
+# add the obb-utils library
+# obb_utils is special housekeeping functions for obb-utils
 add_library(obb-utils SHARED)
 target_sources(obb-utils PRIVATE
 				${CMAKE_BINARY_DIR}/../src/obb_utils.cpp
