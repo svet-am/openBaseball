@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 	string obbPathString = getBasePath(&argv[0]);
 	
 	//create the splash screen window
-	sf::RenderWindow splashWindow(sf::VideoMode(512, 512), "Splash Screen", sf::Style::None);
+	sf::RenderWindow splashWindow(sf::VideoMode(512,512), "Splash Screen", sf::Style::None);
 	sf::Texture splashScreenLogoTexture;
 	
 	if (!splashScreenLogoTexture.loadFromFile(obbPathString.append("/img/obb_logo.png"), sf::IntRect(0, 0, 512, 512)))
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 	
 	
     // create the main window
-    sf::Window glWindow(sf::VideoMode(640, 480), OBB_NAME_VER, sf::Style::Default, sf::ContextSettings(24));
+    sf::Window glWindow(sf::VideoMode((sf::VideoMode::getDesktopMode().width)*.75, (sf::VideoMode::getDesktopMode().height)*.75), OBB_NAME_VER, sf::Style::Default, sf::ContextSettings(24));
     glWindow.setVerticalSyncEnabled(true);
 
     // activate the window
