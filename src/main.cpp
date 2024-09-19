@@ -9,13 +9,6 @@
 #include "SFML/Graphics.hpp"
 #include "obb_version.hpp"
 #include "obb_utils.hpp"
-#if defined(_WIN32) || defined(_WIN64)
-
-#elif defined(__linux__)
-	#include <limits.h>
-	#include <unistd.h>	
-#else
-#endif
 
 using namespace std;
  
