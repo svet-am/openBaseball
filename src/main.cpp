@@ -22,9 +22,8 @@ using namespace std;
 int main(int argc, char *argv[])
 {
 	//get current path of the executable
-	string obbPathString = getexepath();
-	cout << "The location of the binary is " << obbPathString << endl;
-	cout << "The argv is " 					<< getenv("_") 		  << endl;
+	string obbPathString = getBasePath(&argv[0]);
+	
 	//create the splash screen window
 	sf::RenderWindow splashWindow(sf::VideoMode(512, 512), "Splash Screen", sf::Style::None);
 	sf::Texture splashScreenLogoTexture;
@@ -39,7 +38,7 @@ int main(int argc, char *argv[])
 	splashWindow.close();
 	
 	
-    // create the window
+    // create the main window
     sf::Window glWindow(sf::VideoMode(640, 480), OBB_NAME_VER, sf::Style::Default, sf::ContextSettings(24));
     glWindow.setVerticalSyncEnabled(true);
 

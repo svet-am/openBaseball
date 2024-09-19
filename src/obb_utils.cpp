@@ -1,14 +1,19 @@
 //obb_utils.h for OpenBaseball
 //https://github.com/svet-am/openBaseball
 //written by Tony McDowell (svet.am@gmail.com)
+
+#include <cstddef>
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include <limits.h>
+#include <unistd.h>
+
 /**
  * Determination a platform of an operation system
  * Fully supported supported only GNU GCC/G++, partially on Clang/LLVM
  * Referenced from https://stackoverflow.com/questions/142508/how-do-i-check-os-with-a-preprocessor-directive
  */
-#include <cstddef>
-#include <iostream>
-
 #if defined(_WIN32) || defined(_WIN64)
     #define PLATFORM_NAME "windows" // Windows
 	#include <windows.h>
@@ -26,15 +31,37 @@
 #endif
 
 // Return a name of platform, if determined, otherwise - an empty string
-std::string getexepath()
-{
-  char result[ MAX_PATH ];
-  #if defined(_WIN32) || defined(_WIN64)
-  return std::string( result, GetModuleFileName( NULL, result, MAX_PATH ) );
-  #elif defined(__linux__)
-  ssize_t count = readlink( "/proc/self/exe", result, PATH_MAX );
-  return std::string( result, (count > 0) ? count : 0 );
-  #elif defined(__APPLE__) && defined(__MACH__)
-  #endif
+// Referenced from https://www.linuxquestions.org/questions/programming-9/c-function-to-get-application-path-335442/
+std::string getBasePath(char *path[]){
+	char abs_path[PATH_MAX];
+	char path_save[PATH_MAX];
+	char *p;
+
+	//check for Windows path
+	#if defined(_WIN32) || defined(_WIN64)
+	if(!(p = strrchr(*path, '\\'))){
+		
+	//check for Linux / UNIX path	
+	#elif defined(__linux__)
+	if(!(p = strrchr(*path, '\\'))){
+	#endif
+    
+	return getcwd(abs_path, sizeof(abs_path));
+  }
+  else{
+    *p = '\0';
+    getcwd(path_save, sizeof(path_save));
+    chdir(*path);
+    getcwd(abs_path, sizeof(abs_path));
+    chdir(path_save);
+	
+	return abs_path;
+  }
   
+  
+	//Apple implementation of path fetching
+	//  #elif defined(__APPLE__) && defined(__MACH__)
+
+	// should never get here
+	return NULL;
 }
