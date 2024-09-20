@@ -38,11 +38,19 @@ option(SFML_BUILD_AUDIO "Build SFML audio support" ON)
 option(SFML_BUILD_GRAPHICS "Build SFML graphics support" ON)
 option(SFML_BUILD_WINDOW "Build SFML window management support" ON)
 
+## Add SFML to project
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 2.6.x
 	SYSTEM)
 FetchContent_MakeAvailable(SFML)
+
+## Add wxWidget to project
+FetchContent_Declare(WXWIDGETS
+    GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
+    GIT_TAG v3.2.6
+	SYSTEM)
+FetchContent_MakeAvailable(WXWIDGETS)
 
 # add the obb-utils library
 # obb_utils is special housekeeping functions for obb-utils
