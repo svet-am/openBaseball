@@ -21,36 +21,15 @@ set(CMAKE_CXX_STANDARD 17)
 
 message(STATUS "Detected Build OS: ${CMAKE_HOST_SYSTEM_NAME}")
 
-# write the version header for the primary application
-file(WRITE ${CMAKE_BINARY_DIR}/../src/obb_version.hpp
-"#define OBB_NAME \"${APP_NAME}\"\n"
-"#define OBB_VERSION_MAJOR \"${VERSION_MAJOR}\"\n"
-"#define OBB_VERSION_MINOR \"${VERSION_MINOR}\"\n"
-"#define OBB_VERSION_PATCH \"${VERSION_PATCH}\"\n"
-"const char* OBB_NAME_VER = OBB_NAME \" \" OBB_VERSION_MAJOR \".\" OBB_VERSION_MINOR \".\" OBB_VERSION_PATCH ;\n"
-)
-
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-# set configuration options for SFML
-option(BUILD_SHARED_LIBS "Build SFML shared libraries" ON)
-option(SFML_BUILD_NETWORK "Build SFML network support" ON)
-option(SFML_BUILD_AUDIO "Build SFML audio support" ON)
-option(SFML_BUILD_GRAPHICS "Build SFML graphics support" ON)
-option(SFML_BUILD_WINDOW "Build SFML window management support" ON)
-
-# set configuration options for SFML
-option(wxUSE_STL "Build wxWidgets C++ STL support" ON)
-option(wxUSE_REGEX "Build wxWidgets support for wxRegEx class" ON)
-option(wxUSE_ZLIB "Build wxWidgets zlib for LZW compression support" ON)
-option(wxUSE_EXPAT "Build wxWidgets expat for XML parsing support" ON)
-option(wxUSE_LIBJPEG "Build wxWidgets libjpeg (JPEG file format) support" ON)
-option(wxUSE_LIBPNG "Build wxWidgets libpng (PNG image format) support" ON)
-option(wxUSE_LIBTIFF "Build wxWidgets libtiff (TIFF file support" ON)
-option(wxUSE_NANOSVG "Build wxWidgets NanoSVG for rasterizing SVG support" ON)
-option(wxUSE_LIBLZMA "Build wxWidgets liblzma for LZMA compression support" ON)
+set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
 
 ## Add SFML to project
+set(BUILD_SHARED_LIBS OFF)
+set(SFML_BUILD_NETWORK ON)
+set(SFML_BUILD_AUDIO ON)
+set(SFML_BUILD_GRAPHICS ON)
+set(SFML_BUILD_WINDOW ON)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 2.6.x
@@ -58,11 +37,23 @@ FetchContent_Declare(SFML
 FetchContent_MakeAvailable(SFML)
 
 ## Add wxWidget to project
-FetchContent_Declare(WXWIDGETS
+set(wxWidgets_USE_STATIC 1)
+set(wxBUILD_SHARED OFF)
+set(wxUSE_STL OFF)
+set(wxUSE_REGEX builtin)
+set(wxUSE_ZLIB builtin)
+set(wxUSE_EXPAT builtin)
+set(wxUSE_LIBJPEG builtin)
+set(wxUSE_LIBPNG builtin)
+set(wxUSE_LIBTIFF builtin)
+set(wxUSE_NANOSVG builtin)
+set(wxUSE_LIBLZMA builtin)
+FetchContent_Declare(wxWidgets
     GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
     GIT_TAG v3.2.6
 	SYSTEM)
-FetchContent_MakeAvailable(WXWIDGETS)
+FetchContent_GetProperties(wxWidgets)
+FetchContent_MakeAvailable(wxWidgets)
 
 # add the obb-utils library
 # obb_utils is special housekeeping functions for obb-utils
@@ -77,44 +68,17 @@ target_sources(obb-utils PUBLIC
 # set up the main application build
 add_executable(${APP_NAME} ${CMAKE_BINARY_DIR}/../src/main.cpp)
 target_compile_features(${APP_NAME} PRIVATE cxx_std_17)
-target_include_directories(${APP_NAME} PRIVATE  ${CMAKE_BINARY_DIR}/_deps/sfml-src/include)
-target_include_directories(${APP_NAME} PRIVATE  ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include)
+target_include_directories(${APP_NAME} PRIVATE  ${SFML_SOURCE_DIR}/include)
+target_include_directories(${APP_NAME} PRIVATE  ${wxWidgets_SOURCE_DIR}/include)
 target_link_libraries(${APP_NAME} PRIVATE obb-utils)
 
-#SFML libraries
-target_link_libraries(${APP_NAME} PRIVATE sfml-system)
-target_link_libraries(${APP_NAME} PRIVATE sfml-window)
-target_link_libraries(${APP_NAME} PRIVATE sfml-graphics)
-
 #wxWIDGETS libraries
-target_link_libraries(${APP_NAME} PRIVATE wxbase)
-target_link_libraries(${APP_NAME} PRIVATE wxcore)
-
+target_link_libraries(${APP_NAME} PRIVATE wxbase wxcore)
+#SFML libraries
+target_link_libraries(${APP_NAME} PRIVATE sfml-system sfml-window sfml-graphics)
 # Valid wxWIDGETS Library Dependency Names
-# wxregex
-# wxzlib
-# wxexpat
-# wxjpeg
-# wxpng
-# wxtiff
-# wxbase
-# wxnet
-# wxcore
-# wxadv
-# wxaui
-# wxhtml
-# wxpropgrid
-# wxribbon
-# wxxml
-# wxrichtext
-# wxwebview
-# wxscintilla
-# wxstc
-# wxxrc
-# wxmedia
-# wxgl
-# wxqa
-# wxrc
+# wxregex # wxzlib # wxexpat # wxjpeg # wxpng # wxtiff # wxbase # wxnet # wxcore # wxadv # wxaui # wxhtml # wxpropgrid # wxribbon # wxxml # wxrichtext # wxwebview
+# wxscintilla # wxstc # wxxrc # wxmedia # wxgl # wxqa # wxrc
 
 # set OS-specific dependencies
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Linux")
@@ -139,6 +103,17 @@ else()
 endif()
 
 # copy resources into the install directory
+
+# write the version header for the primary application
+message(STATUS "Installing VERSION HEADER resources")
+file(WRITE ${CMAKE_BINARY_DIR}/../src/obb_version.hpp
+"#define OBB_NAME \"${APP_NAME}\"\n"
+"#define OBB_VERSION_MAJOR \"${VERSION_MAJOR}\"\n"
+"#define OBB_VERSION_MINOR \"${VERSION_MINOR}\"\n"
+"#define OBB_VERSION_PATCH \"${VERSION_PATCH}\"\n"
+"const char* OBB_NAME_VER = OBB_NAME \" \" OBB_VERSION_MAJOR \".\" OBB_VERSION_MINOR \".\" OBB_VERSION_PATCH ;\n"
+)
+
 message(STATUS "Installing IMAGE resources")
 file(COPY ${CMAKE_BINARY_DIR}/../res/img/ DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/img/)
 
