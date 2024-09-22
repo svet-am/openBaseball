@@ -13,13 +13,13 @@
 
 using namespace std;
 
-class MyApp : public wxApp
+class OBBApp : public wxApp
 {
 public:
     bool OnInit() override;
 };
  
-wxIMPLEMENT_APP(MyApp);
+wxIMPLEMENT_APP(OBBApp);
  
 class MyFrame : public wxFrame
 {
@@ -31,14 +31,30 @@ private:
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
 };
+
+class LogoFrame : public wxFrame
+{
+public:
+    LogoFrame();
  
+};
+
 enum
 {
     ID_Hello = 1
 };
  
-bool MyApp::OnInit()
+bool OBBApp::OnInit()
 {
+    //Create the loading / logo screen
+    LogoFrame *lFrame = new LogoFrame();
+    lFrame->Show(true);
+    //Load options and dependencies
+    //This is just a Sleep() in early development
+    Sleep(5000);
+    lFrame->Close(true);
+
+    // Create the primary game window
     MyFrame *frame = new MyFrame();
     frame->Show(true);
     return true;
@@ -69,7 +85,13 @@ MyFrame::MyFrame()
     Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
 }
- 
+
+LogoFrame::LogoFrame()
+    : wxFrame(nullptr, wxID_ANY, "Logo Frame")
+{
+
+}
+
 void MyFrame::OnExit(wxCommandEvent& event)
 {
     Close(true);
