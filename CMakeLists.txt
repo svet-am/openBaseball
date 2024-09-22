@@ -30,13 +30,25 @@ file(WRITE ${CMAKE_BINARY_DIR}/../src/obb_version.hpp
 "const char* OBB_NAME_VER = OBB_NAME \" \" OBB_VERSION_MAJOR \".\" OBB_VERSION_MINOR \".\" OBB_VERSION_PATCH ;\n"
 )
 
-# add the external dependency for SFML
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
+# set configuration options for SFML
 option(BUILD_SHARED_LIBS "Build SFML shared libraries" ON)
 option(SFML_BUILD_NETWORK "Build SFML network support" ON)
 option(SFML_BUILD_AUDIO "Build SFML audio support" ON)
 option(SFML_BUILD_GRAPHICS "Build SFML graphics support" ON)
 option(SFML_BUILD_WINDOW "Build SFML window management support" ON)
+
+# set configuration options for SFML
+option(wxUSE_STL "Build wxWidgets C++ STL support" ON)
+option(wxUSE_REGEX "Build wxWidgets support for wxRegEx class" ON)
+option(wxUSE_ZLIB "Build wxWidgets zlib for LZW compression support" ON)
+option(wxUSE_EXPAT "Build wxWidgets expat for XML parsing support" ON)
+option(wxUSE_LIBJPEG "Build wxWidgets libjpeg (JPEG file format) support" ON)
+option(wxUSE_LIBPNG "Build wxWidgets libpng (PNG image format) support" ON)
+option(wxUSE_LIBTIFF "Build wxWidgets libtiff (TIFF file support" ON)
+option(wxUSE_NANOSVG "Build wxWidgets NanoSVG for rasterizing SVG support" ON)
+option(wxUSE_LIBLZMA "Build wxWidgets liblzma for LZMA compression support" ON)
 
 ## Add SFML to project
 FetchContent_Declare(SFML
@@ -66,10 +78,43 @@ target_sources(obb-utils PUBLIC
 add_executable(${APP_NAME} ${CMAKE_BINARY_DIR}/../src/main.cpp)
 target_compile_features(${APP_NAME} PRIVATE cxx_std_17)
 target_include_directories(${APP_NAME} PRIVATE  ${CMAKE_BINARY_DIR}/_deps/sfml-src/include)
+target_include_directories(${APP_NAME} PRIVATE  ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include)
+target_link_libraries(${APP_NAME} PRIVATE obb-utils)
+
+#SFML libraries
 target_link_libraries(${APP_NAME} PRIVATE sfml-system)
 target_link_libraries(${APP_NAME} PRIVATE sfml-window)
 target_link_libraries(${APP_NAME} PRIVATE sfml-graphics)
-target_link_libraries(${APP_NAME} PRIVATE obb-utils)
+
+#wxWIDGETS libraries
+target_link_libraries(${APP_NAME} PRIVATE wxbase)
+target_link_libraries(${APP_NAME} PRIVATE wxcore)
+
+# Valid wxWIDGETS Library Dependency Names
+# wxregex
+# wxzlib
+# wxexpat
+# wxjpeg
+# wxpng
+# wxtiff
+# wxbase
+# wxnet
+# wxcore
+# wxadv
+# wxaui
+# wxhtml
+# wxpropgrid
+# wxribbon
+# wxxml
+# wxrichtext
+# wxwebview
+# wxscintilla
+# wxstc
+# wxxrc
+# wxmedia
+# wxgl
+# wxqa
+# wxrc
 
 # set OS-specific dependencies
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Linux")
@@ -77,6 +122,8 @@ if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Linux")
 	return()
 
 elseif(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Windows")
+	message(STATUS "Copying wxWidgtes platform-specific data for ${CMAKE_HOST_SYSTEM_NAME}")
+	file(COPY ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx/msw/setup.h DESTINATION ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx)
 	target_link_libraries(${APP_NAME} PUBLIC "-lopengl32")
 	target_link_libraries(${APP_NAME} PUBLIC "-lwinmm")
 	target_link_libraries(${APP_NAME} PUBLIC "-lgdi32")
@@ -94,3 +141,5 @@ endif()
 # copy resources into the install directory
 message(STATUS "Installing IMAGE resources")
 file(COPY ${CMAKE_BINARY_DIR}/../res/img/ DESTINATION ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/img/)
+
+message(STATUS "Installing SOUND resources")
