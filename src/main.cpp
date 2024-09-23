@@ -8,6 +8,10 @@
 #include "SFML/OpenGL.hpp"
 #include "SFML/Graphics.hpp"
 #include "WX/WX.h"
+#include "WX/display.h"
+#include "wx/image.h"
+#include "wx/file.h"
+#include "wx/bitmap.h"
 #include "obb_version.hpp"
 #include "obb_utils.hpp"
 
@@ -32,11 +36,21 @@ private:
     void OnAbout(wxCommandEvent& event);
 };
 
+// This frame is very simple because it will only be for showing the logo
 class LogoFrame : public wxFrame
 {
 public:
-    LogoFrame();
- 
+    LogoFrame()
+    :wxFrame(NULL, -1, wxString(), wxDefaultPosition, wxSize(64,64), wxBORDER_NONE) {
+    }
+    void LoadImage(wxString fileName);
+
+private:
+	int m_imageWidth ;
+	int m_imageHeight ;
+    wxBitmap m_imageBitmap ;	// used to display the image
+	wxImage *m_imageRGB ;		// used to load the image
+    unsigned char* m_myImage ;	// used to process the image 
 };
 
 enum
@@ -46,8 +60,19 @@ enum
  
 bool OBBApp::OnInit()
 {
+    //zzzzzzzzzzzz  Working on getting the base path so that I can load the loading screen image
+    wxString appArgv0(wxTheApp->argv[0]);
+    char argvCharBuffer = appArgv0.ToUTF8();
+
+    wxString appBaseDir(getBasePath(&argvCharBuffer));
+
+    //Initialize various wxWidgets Handlers
+    wxInitAllImageHandlers();
+
     //Create the loading / logo screen
     LogoFrame *lFrame = new LogoFrame();
+    lFrame->SetClientSize(wxSize(512, 512));
+    lFrame->Centre();
     lFrame->Show(true);
     //Load options and dependencies
     //This is just a Sleep() in early development
@@ -56,12 +81,14 @@ bool OBBApp::OnInit()
 
     // Create the primary game window
     MyFrame *frame = new MyFrame();
+    frame->SetClientSize(wxSize((int)(wxDisplay().GetGeometry().GetWidth()*.85) , (int)(wxDisplay().GetGeometry().GetHeight()*.80)));
+    frame->Centre();
     frame->Show(true);
     return true;
 }
  
 MyFrame::MyFrame()
-    : wxFrame(nullptr, wxID_ANY, "Hello World")
+    : wxFrame(nullptr, wxID_ANY, OBB_NAME, wxDefaultPosition, wxSize(1024,768))
 {
     wxMenu *menuFile = new wxMenu;
     menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
@@ -86,12 +113,6 @@ MyFrame::MyFrame()
     Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
 }
 
-LogoFrame::LogoFrame()
-    : wxFrame(nullptr, wxID_ANY, "Logo Frame")
-{
-
-}
-
 void MyFrame::OnExit(wxCommandEvent& event)
 {
     Close(true);
@@ -106,4 +127,34 @@ void MyFrame::OnAbout(wxCommandEvent& event)
 void MyFrame::OnHello(wxCommandEvent& event)
 {
     wxLogMessage("Hello world from wxWidgets!");
+}
+
+//------------------------------------------------------------------------
+void LogoFrame::LoadImage(wxString fileName)
+//------------------------------------------------------------------------
+{
+	if (m_myImage)
+		free (m_myImage) ;
+	if (m_imageRGB)
+		delete m_imageRGB ;
+
+// open image dialog box
+	m_imageRGB = new wxImage(fileName, wxBITMAP_TYPE_ANY, -1); // ANY => can load many image formats
+	m_imageBitmap = wxBitmap(*m_imageRGB, -1); // ...to get the corresponding bitmap
+
+	m_imageWidth = m_imageRGB->GetWidth() ;
+	m_imageHeight = m_imageRGB->GetHeight() ;
+
+	m_myImage = (unsigned char*)malloc(m_imageWidth * m_imageHeight * 3) ;
+	memcpy(m_myImage, m_imageRGB->GetData(), m_imageWidth * m_imageHeight * 3) ;
+
+// update GUI size
+	SetSize(m_imageWidth, m_imageHeight) ;
+	GetParent()->SetClientSize(GetSize()) ;
+
+    wxPaintDC dc(this);
+    dc.DrawBitmap(m_imageBitmap, 0, 0) ;
+
+// update display
+	Refresh(true) ;
 }
