@@ -4,14 +4,13 @@
 #include <time.h>
 #include <stdlib.h> 
 #include <iostream>
-#include "SFML/Window.hpp"
-#include "SFML/OpenGL.hpp"
-#include "SFML/Graphics.hpp"
 #include "WX/WX.h"
 #include "WX/display.h"
 #include "wx/image.h"
 #include "wx/file.h"
 #include "wx/bitmap.h"
+#include "wx/filename.h"
+#include "wx/stdpaths.h"
 #include "obb_version.hpp"
 #include "obb_utils.hpp"
 
@@ -60,11 +59,8 @@ enum
  
 bool OBBApp::OnInit()
 {
-    //zzzzzzzzzzzz  Working on getting the base path so that I can load the loading screen image
-    wxString appArgv0(wxTheApp->argv[0]);
-    char argvCharBuffer = appArgv0.ToUTF8();
-
-    wxString appBaseDir(getBasePath(&argvCharBuffer));
+    wxFileName binaryLocation(wxStandardPaths::Get().GetExecutablePath());
+    wxString binaryBasePath(binaryLocation.GetPath());
 
     //Initialize various wxWidgets Handlers
     wxInitAllImageHandlers();
@@ -72,6 +68,7 @@ bool OBBApp::OnInit()
     //Create the loading / logo screen
     LogoFrame *lFrame = new LogoFrame();
     lFrame->SetClientSize(wxSize(512, 512));
+    lFrame->LoadImage(binaryBasePath.Append("/img/obb_logo.png"));
     lFrame->Centre();
     lFrame->Show(true);
     //Load options and dependencies
