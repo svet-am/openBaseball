@@ -24,18 +24,6 @@ message(STATUS "Detected Build OS: ${CMAKE_HOST_SYSTEM_NAME}")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/bin)
 
-## Add SFML to project
-set(BUILD_SHARED_LIBS OFF)
-set(SFML_BUILD_NETWORK ON)
-set(SFML_BUILD_AUDIO ON)
-set(SFML_BUILD_GRAPHICS ON)
-set(SFML_BUILD_WINDOW ON)
-FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 2.6.x
-	SYSTEM)
-FetchContent_MakeAvailable(SFML)
-
 ## Add wxWidget to project
 set(wxWidgets_USE_STATIC 1)
 set(wxBUILD_SHARED OFF)
@@ -68,14 +56,11 @@ target_sources(obb-utils PUBLIC
 # set up the main application build
 add_executable(${APP_NAME} ${CMAKE_BINARY_DIR}/../src/main.cpp)
 target_compile_features(${APP_NAME} PRIVATE cxx_std_17)
-target_include_directories(${APP_NAME} PRIVATE  ${SFML_SOURCE_DIR}/include)
 target_include_directories(${APP_NAME} PRIVATE  ${wxWidgets_SOURCE_DIR}/include)
 target_link_libraries(${APP_NAME} PRIVATE obb-utils)
 
 #wxWIDGETS libraries
 target_link_libraries(${APP_NAME} PRIVATE wxbase wxcore)
-#SFML libraries
-target_link_libraries(${APP_NAME} PRIVATE sfml-system sfml-window sfml-graphics)
 # Valid wxWIDGETS Library Dependency Names
 # wxregex # wxzlib # wxexpat # wxjpeg # wxpng # wxtiff # wxbase # wxnet # wxcore # wxadv # wxaui # wxhtml # wxpropgrid # wxribbon # wxxml # wxrichtext # wxwebview
 # wxscintilla # wxstc # wxxrc # wxmedia # wxgl # wxqa # wxrc
