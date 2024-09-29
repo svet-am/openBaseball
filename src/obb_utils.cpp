@@ -3,11 +3,7 @@
 //written by Tony McDowell (svet.am@gmail.com)
 
 #include <cstddef>
-#include <iostream>
-#include <stdio.h>
 #include <string.h>
-#include <limits.h>
-#include <unistd.h>
 
 /**
  * Determination a platform of an operation system
@@ -29,4 +25,3 @@
 #else
     #define PLATFORM_NAME NULL
 #endif
-

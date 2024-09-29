@@ -5,6 +5,7 @@
 #include <stdlib.h> 
 #include <iostream>
 #include "WX/WX.h"
+#include "wx/sizer.h"
 #include "WX/display.h"
 #include "wx/image.h"
 #include "wx/file.h"
@@ -42,14 +43,9 @@ public:
     LogoFrame()
     :wxFrame(NULL, -1, wxString(), wxDefaultPosition, wxSize(64,64), wxBORDER_NONE) {
     }
-    void LoadImage(wxString fileName);
 
 private:
-	int m_imageWidth ;
-	int m_imageHeight ;
-    wxBitmap m_imageBitmap ;	// used to display the image
-	wxImage *m_imageRGB ;		// used to load the image
-    unsigned char* m_myImage ;	// used to process the image 
+
 };
 
 enum
@@ -67,12 +63,16 @@ bool OBBApp::OnInit()
 
     //Create the loading / logo screen
     LogoFrame *lFrame = new LogoFrame();
+    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
+
     lFrame->SetClientSize(wxSize(512, 512));
-    lFrame->LoadImage(binaryBasePath.Append("/img/obb_logo.png"));
+    lFrame->SetSizer(sizer);
     lFrame->Centre();
     lFrame->Show(true);
     //Load options and dependencies
     //This is just a Sleep() in early development
+    // update display
+	
     Sleep(5000);
     lFrame->Close(true);
 
@@ -90,7 +90,7 @@ MyFrame::MyFrame()
     wxMenu *menuFile = new wxMenu;
     menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
                      "Help string shown in status bar for this menu item");
-    menuFile->AppendSeparator();
+    //menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
  
     wxMenu *menuHelp = new wxMenu;
@@ -126,32 +126,3 @@ void MyFrame::OnHello(wxCommandEvent& event)
     wxLogMessage("Hello world from wxWidgets!");
 }
 
-//------------------------------------------------------------------------
-void LogoFrame::LoadImage(wxString fileName)
-//------------------------------------------------------------------------
-{
-	if (m_myImage)
-		free (m_myImage) ;
-	if (m_imageRGB)
-		delete m_imageRGB ;
-
-// open image dialog box
-	m_imageRGB = new wxImage(fileName, wxBITMAP_TYPE_ANY, -1); // ANY => can load many image formats
-	m_imageBitmap = wxBitmap(*m_imageRGB, -1); // ...to get the corresponding bitmap
-
-	m_imageWidth = m_imageRGB->GetWidth() ;
-	m_imageHeight = m_imageRGB->GetHeight() ;
-
-	m_myImage = (unsigned char*)malloc(m_imageWidth * m_imageHeight * 3) ;
-	memcpy(m_myImage, m_imageRGB->GetData(), m_imageWidth * m_imageHeight * 3) ;
-
-// update GUI size
-	SetSize(m_imageWidth, m_imageHeight) ;
-	GetParent()->SetClientSize(GetSize()) ;
-
-    wxPaintDC dc(this);
-    dc.DrawBitmap(m_imageBitmap, 0, 0) ;
-
-// update display
-	Refresh(true) ;
-}

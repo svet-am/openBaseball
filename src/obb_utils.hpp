@@ -3,4 +3,4 @@
 //written by Tony McDowell (svet.am@gmail.com)
 
 // fetch the current fully qualified path of the binary
-std::string getBasePath(char *path[]);
+
