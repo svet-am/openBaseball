@@ -62,19 +62,14 @@ bool OBBApp::OnInit()
     wxInitAllImageHandlers();
 
     //Create the loading / logo screen
-    LogoFrame *lFrame = new LogoFrame();
-    wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
-
-    lFrame->SetClientSize(wxSize(512, 512));
-    lFrame->SetSizer(sizer);
-    lFrame->Centre();
-    lFrame->Show(true);
-    //Load options and dependencies
-    //This is just a Sleep() in early development
-    // update display
-	
-    Sleep(5000);
-    lFrame->Close(true);
+	wxBitmap bitmap;
+	if (bitmap.LoadFile(binaryBasePath + "/img/obb_logo.png", wxBITMAP_TYPE_PNG))
+	{
+		wxSplashScreen* splash = new wxSplashScreen(bitmap,
+			wxSPLASH_CENTRE_ON_SCREEN|wxSPLASH_TIMEOUT,
+			2000, NULL, -1, wxDefaultPosition, wxDefaultSize,
+			wxBORDER_SIMPLE|wxSTAY_ON_TOP);
+	}
 
     // Create the primary game window
     MyFrame *frame = new MyFrame();
