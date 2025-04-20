@@ -4,9 +4,9 @@
 #include <time.h>
 #include <stdlib.h> 
 #include <iostream>
-#include "WX/WX.h"
+#include "wx/wx.h"
 #include "wx/sizer.h"
-#include "WX/display.h"
+#include "wx/display.h"
 #include "wx/image.h"
 #include "wx/file.h"
 #include "wx/bitmap.h"
