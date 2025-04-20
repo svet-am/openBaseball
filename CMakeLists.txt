@@ -1,7 +1,7 @@
 #CMake for OpenBaseball
 #https://github.com/svet-am/openBaseball
 #written by Tony McDowell (svet.am@gmail.com)
-cmake_minimum_required(VERSION 3.30)
+cmake_minimum_required(VERSION 3.25)
 # setup CMAKE dependencies
 include(FetchContent)
 
@@ -36,10 +36,11 @@ set(wxUSE_LIBPNG builtin)
 set(wxUSE_LIBTIFF builtin)
 set(wxUSE_NANOSVG builtin)
 set(wxUSE_LIBLZMA builtin)
-FetchContent_Declare(wxWidgets
+FetchContent_Declare(
+	wxWidgets
     GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
-    GIT_TAG v3.2.6
-	SYSTEM)
+    GIT_TAG v3.2.7.1
+	)
 FetchContent_GetProperties(wxWidgets)
 FetchContent_MakeAvailable(wxWidgets)
 
@@ -67,9 +68,9 @@ target_link_libraries(${APP_NAME} PRIVATE wxbase wxcore)
 
 # set OS-specific dependencies
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Linux")
-	message(SEND_ERROR "Linux currently unsupported")
-	return()
-
+	message(STATUS "Copying wxWidgtes platform-specific data for ${CMAKE_HOST_SYSTEM_NAME}")
+	# file(COPY ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx/gtk/setup.h DESTINATION ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx)
+	
 elseif(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Windows")
 	message(STATUS "Copying wxWidgtes platform-specific data for ${CMAKE_HOST_SYSTEM_NAME}")
 	file(COPY ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx/msw/setup.h DESTINATION ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx)
