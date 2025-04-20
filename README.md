@@ -6,9 +6,9 @@ OpenBaseball is a spiritual successor to the baseball video games of the mid-199
 
 | HOST OS         |  STATUS         |
 | --------------- | --------------- |
-| Windows (10+)   |  does not build |
+| Windows (10+)   |  baseline test compilation only |
 | MacOS           |  does not build |
-| Linux           |  does not build |
+| Linux           |  baseline test compilation only |
 
 
 # Maintainers
