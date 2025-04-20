@@ -12,6 +12,7 @@
 #include "wx/bitmap.h"
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
+#include "wx/splash.h"
 #include "obb_version.hpp"
 #include "obb_utils.hpp"
 
