@@ -69,7 +69,8 @@ target_link_libraries(${APP_NAME} PRIVATE wxbase wxcore)
 # set OS-specific dependencies
 if(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Linux")
 	message(STATUS "Copying wxWidgtes platform-specific data for ${CMAKE_HOST_SYSTEM_NAME}")
-	# file(COPY ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx/gtk/setup.h DESTINATION ${CMAKE_BINARY_DIR}/_deps/wxwidgets-src/include/wx)
+	target_link_libraries(${APP_NAME} PUBLIC "-lGL")
+	target_link_libraries(${APP_NAME} PUBLIC "-lGLU")
 	
 elseif(${CMAKE_HOST_SYSTEM_NAME} STREQUAL  "Windows")
 	message(STATUS "Copying wxWidgtes platform-specific data for ${CMAKE_HOST_SYSTEM_NAME}")
