@@ -62,7 +62,7 @@ target_include_directories(${APP_NAME} PRIVATE  ${wxWidgets_SOURCE_DIR}/include)
 target_link_libraries(${APP_NAME} PRIVATE obb-utils)
 
 #wxWIDGETS libraries
-target_link_libraries(${APP_NAME} PRIVATE wxbase wxcore)
+target_link_libraries(${APP_NAME} PRIVATE wxbase wxcore wxribbon wxaui)
 # Valid wxWIDGETS Library Dependency Names
 # wxregex # wxzlib # wxexpat # wxjpeg # wxpng # wxtiff # wxbase # wxnet # wxcore # wxadv # wxaui # wxhtml # wxpropgrid # wxribbon # wxxml # wxrichtext # wxwebview
 # wxscintilla # wxstc # wxxrc # wxmedia # wxgl # wxqa # wxrc
