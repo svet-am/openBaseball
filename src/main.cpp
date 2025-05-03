@@ -13,6 +13,11 @@
 #include "wx/filename.h"
 #include "wx/stdpaths.h"
 #include "wx/splash.h"
+#include "wx/aui/aui.h"
+#include "wx/ribbon/bar.h"
+#include "wx/ribbon/buttonbar.h"
+#include "wx/artprov.h"
+
 #include "obb_version.hpp"
 #include "obb_utils.hpp"
 
@@ -83,6 +88,74 @@ bool OBBApp::OnInit()
 MyFrame::MyFrame()
     : wxFrame(nullptr, wxID_ANY, OBB_NAME, wxDefaultPosition, wxSize(1024,768))
 {
+	// Ribbon
+    wxRibbonBar *ribbonBar = new wxRibbonBar(this, -1, wxDefaultPosition, wxDefaultSize, wxRIBBON_BAR_FLOW_HORIZONTAL
+                                | wxRIBBON_BAR_SHOW_PAGE_LABELS
+                                | wxRIBBON_BAR_SHOW_PANEL_EXT_BUTTONS
+                                | wxRIBBON_BAR_SHOW_TOGGLE_BUTTON
+                                );
+ 
+    wxRibbonPage *homeRibbonPage = new wxRibbonPage(ribbonBar, wxID_ANY, wxT("Master Data"), wxNullBitmap);
+    wxRibbonPage *editRibbonPage = new wxRibbonPage(ribbonBar, wxID_ANY, wxT("Edit Page"), wxNullBitmap);
+ 
+    wxRibbonPanel *homeRibbonPanel = new wxRibbonPanel(homeRibbonPage, wxID_ANY, wxT("Home"), wxNullBitmap,
+                                  wxDefaultPosition, wxDefaultSize,
+                                  wxRIBBON_PANEL_NO_AUTO_MINIMISE);
+    wxRibbonPanel *itemRibbonPanel = new wxRibbonPanel(homeRibbonPage, wxID_ANY, wxT("Data Item"),
+                                        wxNullBitmap, wxDefaultPosition, wxDefaultSize,
+                                        wxRIBBON_PANEL_NO_AUTO_MINIMISE);
+ 
+    wxRibbonButtonBar *homeRibbonButtonBar = new wxRibbonButtonBar(homeRibbonPanel);
+    wxRibbonButtonBar *itemRibbonButtonBar = new wxRibbonButtonBar(itemRibbonPanel);
+ 
+    homeRibbonButtonBar->AddButton(wxID_ANY, wxT("Home Menu"),
+                                   wxArtProvider::GetBitmap(wxART_ADD_BOOKMARK, wxART_TOOLBAR, wxSize(16,15)));
+ 
+    itemRibbonButtonBar->AddButton(wxID_ANY, wxT("Daftar Guru"),
+                    wxArtProvider::GetBitmap(wxART_QUESTION, wxART_TOOLBAR, wxSize(16,15)));
+    itemRibbonButtonBar->AddButton(wxID_ANY, wxT("Tambah Guru"),
+                    wxArtProvider::GetBitmap(wxART_QUESTION, wxART_TOOLBAR, wxSize(16,15)));
+    itemRibbonButtonBar->AddButton(wxID_ANY, wxT("Daftar Siswa"),
+                    wxArtProvider::GetBitmap(wxART_QUESTION, wxART_TOOLBAR, wxSize(16,15)));
+    itemRibbonButtonBar->AddButton(wxID_ANY, wxT("Tambah Siswa"),
+                    wxArtProvider::GetBitmap(wxART_QUESTION, wxART_TOOLBAR, wxSize(16,15)));
+ 
+    ribbonBar->AddPageHighlight(ribbonBar->GetPageCount() - 1);
+    ribbonBar->Realize();
+ 
+    // set style msw provider
+    ribbonBar->DismissExpandedPanel();
+    ribbonBar->SetArtProvider(new wxRibbonMSWArtProvider);
+ 
+    // aui notebook
+    wxSize client_size = GetClientSize();
+ 
+    wxAuiNotebook *auiNotebook = new wxAuiNotebook(this, wxID_ANY,
+                                    wxPoint(client_size.x, client_size.y),
+                                    wxSize(430,200),
+                                    wxAUI_NB_CLOSE_BUTTON | wxAUI_NB_SCROLL_BUTTONS);
+    auiNotebook->Freeze();
+    wxBitmap page_bmp = wxArtProvider::GetBitmap(wxART_NORMAL_FILE, wxART_OTHER, wxSize(16,16));
+ 
+    auiNotebook->AddPage(new wxTextCtrl(auiNotebook, wxID_ANY, wxT("Some text"),
+                                        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxNO_BORDER),
+                                        wxT("Home"), false, page_bmp);
+    auiNotebook->AddPage(new wxTextCtrl(auiNotebook, wxID_ANY, wxT("Some text"),
+                                        wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE|wxNO_BORDER),
+                                        wxT("Item 1"), false, page_bmp);
+ 
+    auiNotebook->SetPageToolTip(0, "Menu utama sistem informasi akademik");
+    auiNotebook->Thaw();
+ 
+    // set layout
+    wxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    sizer->Add(ribbonBar, 0, wxEXPAND);
+    sizer->Add(auiNotebook, 1, wxEXPAND);
+    SetSizer(sizer);
+ 
+    Centre();
+	
+/*  RIBBON MENU STYLE
     wxMenu *menuFile = new wxMenu;
     menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
                      "Help string shown in status bar for this menu item");
@@ -104,6 +177,8 @@ MyFrame::MyFrame()
     Bind(wxEVT_MENU, &MyFrame::OnHello, this, ID_Hello);
     Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
+
+*/
 }
 
 void MyFrame::OnExit(wxCommandEvent& event)
