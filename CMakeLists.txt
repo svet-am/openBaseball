@@ -36,6 +36,7 @@ set(wxUSE_LIBPNG builtin)
 set(wxUSE_LIBTIFF builtin)
 set(wxUSE_NANOSVG builtin)
 set(wxUSE_LIBLZMA builtin)
+message(STATUS "Fetching sources for: WXWIDGETS")
 FetchContent_Declare(
 	wxWidgets
     GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
