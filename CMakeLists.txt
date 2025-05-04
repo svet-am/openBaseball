@@ -6,7 +6,7 @@ cmake_minimum_required(VERSION 3.25)
 include(FetchContent)
 
 # setup version numbers
-set(APP_NAME "OpenBaseball")
+set(APP_NAME "openbb")
 set(VERSION_MAJOR 0)
 set(VERSION_MINOR 10)
 set(VERSION_PATCH 0)
