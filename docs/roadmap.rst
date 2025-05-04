@@ -22,23 +22,41 @@ ROADMAP OVERVIEW
 MAJOR MILESTONES
 ===============================
 -------------------------------
-0.0.0
+0.00.0
 -------------------------------
 * Implementation of build system (CMAKE)
 
 -------------------------------
-0.0.1
+0.00.1
 -------------------------------
 * Test application (Hello World) building on Windows target
 * Test application (Hello World) building on Linux target
-* SFML sub-module building on Windows target
-* SFML sub-module building on Linux target
+* SFML sub-module building on Windows target (deprecated, SFML replaced with wxWIDGETS)
+* SFML sub-module building on Linux target (deprecated, SFML replaced with wxWIDGETS)
 
 -------------------------------
-0.0.2
+0.01.0
 -------------------------------
 * Basic application (openbb) building on Windows target (w/o OpenGL context)
 * Basic application (openbb) building on Linux target (w/o OpenGL context)
+
+-------------------------------
+0.10.0
+-------------------------------
+* Loading screen implemented
+* Basic menu interface (ribbon)
+
+-------------------------------
+0.11.0
+-------------------------------
+* Ribbon interface for "PLAY" menu
+* Ribbon interface for "MANAGE" menu
+* Ribbon interfae for "EDIT" menu
+
+-------------------------------
+0.12.0
+-------------------------------
+* All basic dialog boxes / wizards
 
 -------------------------------
 0.60.0
