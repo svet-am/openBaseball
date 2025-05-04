@@ -13,3 +13,6 @@ OpenBaseball is a spiritual successor to the baseball video games of the mid-199
 
 # Maintainers
 OpenBaseball is currently a private educational project but I welcome collaboration.  If you are interested in helping out, please email me at svet[dot]am [at] gmail[dot]com
+
+# Important
+Due to OpenBaseball's state in early development, most graphics resources are generated with Stable Diffusion AI.  It is the goal of this project to replace this with assets created by human artists. If you have digitial art skills and would like to contribute please reach out! (I can't draw)
