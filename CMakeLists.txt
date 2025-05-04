@@ -8,8 +8,8 @@ include(FetchContent)
 # setup version numbers
 set(APP_NAME "OpenBaseball")
 set(VERSION_MAJOR 0)
-set(VERSION_MINOR 0)
-set(VERSION_PATCH 1)
+set(VERSION_MINOR 10)
+set(VERSION_PATCH 0)
 
 project(${APP_NAME} C CXX)
 
