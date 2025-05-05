@@ -42,18 +42,6 @@ private:
     void OnAbout(wxCommandEvent& event);
 };
 
-// This frame is very simple because it will only be for showing the logo
-class LogoFrame : public wxFrame
-{
-public:
-    LogoFrame()
-    :wxFrame(NULL, -1, wxString(), wxDefaultPosition, wxSize(64,64), wxBORDER_NONE) {
-    }
-
-private:
-
-};
-
 enum
 {
     ID_Hello = 1
