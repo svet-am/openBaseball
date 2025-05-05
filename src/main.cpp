@@ -97,7 +97,7 @@ MyFrame::MyFrame()
     wxRibbonButtonBar *itemRibbonButtonBar = new wxRibbonButtonBar(itemRibbonPanel);
  
     homeRibbonButtonBar->AddButton(wxID_ANY, wxT("Home Menu"),
-                                   wxArtProvider::GetBitmap(wxART_ADD_BOOKMARK, wxART_TOOLBAR, wxSize(16,15)));
+                    wxArtProvider::GetBitmap(wxART_WX_LOGO, wxART_TOOLBAR, wxSize(16,15)));
  
     itemRibbonButtonBar->AddButton(wxID_ANY, wxT("Daftar Guru"),
                     wxArtProvider::GetBitmap(wxART_QUESTION, wxART_TOOLBAR, wxSize(16,15)));
@@ -143,30 +143,6 @@ MyFrame::MyFrame()
  
     Centre();
 	
-/*  RIBBON MENU STYLE
-    wxMenu *menuFile = new wxMenu;
-    menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
-                     "Help string shown in status bar for this menu item");
-    //menuFile->AppendSeparator();
-    menuFile->Append(wxID_EXIT);
- 
-    wxMenu *menuHelp = new wxMenu;
-    menuHelp->Append(wxID_ABOUT);
- 
-    wxMenuBar *menuBar = new wxMenuBar;
-    menuBar->Append(menuFile, "&File");
-    menuBar->Append(menuHelp, "&Help");
- 
-    SetMenuBar( menuBar );
- 
-    CreateStatusBar();
-    SetStatusText("Welcome to wxWidgets!");
- 
-    Bind(wxEVT_MENU, &MyFrame::OnHello, this, ID_Hello);
-    Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
-    Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
-
-*/
 }
 
 void MyFrame::OnExit(wxCommandEvent& event)
